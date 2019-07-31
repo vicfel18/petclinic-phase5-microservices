@@ -15,6 +15,7 @@ public class Visit {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     private Date dateOfVisit;
     private String description;
 
