@@ -3,6 +3,7 @@ package com.example.petclinic.controller;
 import com.example.petclinic.model.Owner;
 import com.example.petclinic.service.OwnerService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -49,10 +50,12 @@ public class OwnerController implements BasicController<Owner> {
     }
 
     @Override
-    @RequestMapping(value = "deleteOwner", method = {RequestMethod.DELETE}, produces = "application/json")
-    public boolean delete(@RequestBody Owner owner) {
+    @DeleteMapping(value = "deleteOwner/{id}", produces = "application/json")
+    public ResponseEntity<String> delete(@PathVariable Long id) {
 
-        return this.ownerService.delete(owner);
+        this.ownerService.delete(id);
+
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @Override

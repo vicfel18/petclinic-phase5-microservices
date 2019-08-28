@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class OwnerService {
@@ -67,5 +69,25 @@ public class OwnerService {
 
     }
 
+    public void modifyOwner(Owner owner) {
 
+        URI uri = URI.create("http://localhost:9191/ownerapi/owner/updateOwner");
+
+        restTemplate.put(uri, owner);
+
+        log.info(new StringBuilder().append("Modified Owner: ").append(owner.toString()).toString());
+
+    }
+
+    public boolean deleteOwner(Owner owner) {
+
+        String uri = "http://localhost:9191/ownerapi/owner/deleteOwner/{id}";
+
+        Map<String, String> params = new HashMap<>();
+        params.put("id", owner.getId().toString());
+
+        restTemplate.delete(uri, params);
+
+        return true;
+    }
 }
