@@ -58,6 +58,17 @@ public class PetClinicBuisnessWorkflow {
             log.info(sb.toString());
         });
 
+        // modify owner
+        Owner ownerModification = homers.get(0);
+        ownerModification.setName("Homerus");
+
+        ownerService.modifyOwner(ownerModification);
+
+        log.info(ownerService.getOwnerByName("Homerus").toString());
+
+        // delete owner
+        ownerService.deleteOwner(ownerModification);
+
 
         // TODO add more business related logic here
 

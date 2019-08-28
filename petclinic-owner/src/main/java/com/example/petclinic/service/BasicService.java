@@ -10,7 +10,7 @@ public interface BasicService<T> {
 
     T modify(T t);
 
-    boolean delete(T t);
+    void delete(Long id);
 
     List<T> getAll();
 }

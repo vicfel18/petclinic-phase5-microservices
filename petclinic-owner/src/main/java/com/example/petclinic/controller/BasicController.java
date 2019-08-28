@@ -1,5 +1,7 @@
 package com.example.petclinic.controller;
 
+import org.springframework.http.ResponseEntity;
+
 import java.util.List;
 
 public interface BasicController<T> {
@@ -10,7 +12,7 @@ public interface BasicController<T> {
 
     T modify(T t);
 
-    boolean delete(T t);
+    ResponseEntity<String> delete(Long id);
 
     List<T> getAll();
 

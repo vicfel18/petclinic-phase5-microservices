@@ -42,10 +42,11 @@ public class OwnerService implements BasicService<Owner> {
     }
 
     @Override
-    public boolean delete(Owner owner) {
+    public void delete(Long id) {
 
-        this.ownerRepository.delete(owner);
-        return true;
+        Owner ownerToDelete = get(id);
+        this.ownerRepository.delete(ownerToDelete);
+
     }
 
     @Override
