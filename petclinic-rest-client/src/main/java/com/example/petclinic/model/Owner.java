@@ -3,6 +3,9 @@ package com.example.petclinic.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
+import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -18,7 +21,12 @@ public class Owner {
     private String city;
     private String phoneNumber;
 
-    @JsonIgnoreProperties({"owner","visits"})
+    @OneToMany(
+            mappedBy = "owner",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({"owner", "visits"})
     private List<Pet> pets = new ArrayList<>();
 
     protected Owner() {

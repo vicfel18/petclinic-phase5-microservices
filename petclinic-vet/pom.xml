@@ -26,6 +26,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>petclinic-models</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>

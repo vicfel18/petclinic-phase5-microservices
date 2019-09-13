@@ -2,6 +2,7 @@ package com.example.petclinic.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -10,8 +11,14 @@ public class Vet {
 
     private Long id;
     private String name;
+
+    @ElementCollection(targetClass = Speciality.class)
+    @Enumerated(EnumType.ORDINAL)
+    @CollectionTable(name = "specialities")
+    @Column(name = "speciality")
     private List<Speciality> specialities = new ArrayList<>();
 
+    @ManyToMany(mappedBy = "vets")
     @JsonIgnoreProperties({"pet","vets"})
     private List<Visit> visits = new ArrayList<>();
 
@@ -22,6 +29,14 @@ public class Vet {
     public Vet(String name, List<Speciality> specialities) {
         this.name = name;
         this.specialities = specialities;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {

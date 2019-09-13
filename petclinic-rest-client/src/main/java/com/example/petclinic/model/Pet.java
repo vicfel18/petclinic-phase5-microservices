@@ -2,6 +2,7 @@ package com.example.petclinic.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,10 +15,18 @@ public class Pet {
     private Date birthDate;
     private PetType petType;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner_id")
     @JsonIgnoreProperties("pets")
     private Owner owner;
 
-    @JsonIgnoreProperties({"pet","vets"})
+    @OneToMany(
+            mappedBy = "pet",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
+    )
+    @JsonIgnoreProperties({"pet", "vets"})
     private List<Visit> visits = new ArrayList<>();
 
     protected Pet() {

@@ -2,6 +2,7 @@ package com.example.petclinic.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,10 +14,21 @@ public class Visit {
     private Date dateOfVisit;
     private String description;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pet_id")
     @JsonIgnoreProperties({"owner","visits"})
     private Pet pet;
 
-    @JsonIgnoreProperties("visits")
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    @JoinTable(
+            name = "visit_vet",
+            joinColumns = @JoinColumn(name = "visit_id"),
+            inverseJoinColumns = @JoinColumn(name = "vet_id")
+    )
+    @JsonIgnoreProperties({"visits"})
     private List<Vet> vets = new ArrayList<>();
 
     protected Visit() {
@@ -26,6 +38,14 @@ public class Visit {
     public Visit(Date dateOfVisit, String description) {
         this.dateOfVisit = dateOfVisit;
         this.description = description;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Date getDateOfVisit() {
